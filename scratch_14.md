@@ -53,18 +53,14 @@ Let us consider `abc` first. For `abc` to be invalid, any of the following must 
 a         <   ab        # eq4  # cannot reach b from a
 a + b     <   ab +  bc  # eq4b # cannot reach c after reaching b
 </pre>
-But note that eq4b is redundant, since eq4 = eq4b + eq1. So the only active constraint is eq4
+But note that eq4b is redundant, since eq4b + eq1 = eq4 anyway. So the only active constraint is eq4
 
 ### Route `babc`
 <pre>
     b     <   ab        # eq5  # cannot reach a from b
 a + b     <  2ab +  bc  # eq5b # cannot reach c after reaching a
 </pre>
-Note that we can add eq1 to eq5b to get
-<pre>
-a         <  2ab        # eq5c
-</pre>
-But since eq4 is already active, eq5c is always true and can be ignored. So the only active constraint is eq5.
+Either one of the two constraints must be true for `bcbabc` to be the most optimal route.
 
 ### Route `cbabc`
 <pre>
@@ -77,10 +73,9 @@ Adding eq6b+eq2, and eq6c+eq3, we find that
         0 <        -bc # eq6b + eq2
         0 <        -bc # eq6c + eq3
 </pre>
-Since both these cases are impossible, the inequalities eq6b and eq6c are not active. So the only active constrint is eq6.
+Since both these cases are impossible, the inequalities eq6b and eq6c are not active. So the only active constraint is eq6.
 
-### Summary
-Active constraints:
+### Case `eq5` is true
 <pre>
     -b     <=       -bc  # eq1
     -b  -c <= -ab  -2bc  # eq2
@@ -93,9 +88,28 @@ Active constraints:
  a + b + c <  2ab +  bc  # eq7 = eq4 + eq5 + eq6
          0 <       -2bc  # eq8 = eq3 + eq7
 </pre>
-Clearly eq8 is impossible, so either
+Clearly `eq8` is impossible, so either
  - at least one of the constraints must not be active (i.e. it corresponds to a valid route) or 
-   - the proposed route `bcbabc` is not valid. 
+ - the proposed route `bcbabc` is not valid. 
 
-Both ways result in the same conclusion that `bcbabc` cannot be the optimal route. Hence the optimal route consists of at most 1 turn.
+Hence, `bcbabc` cannot be the optimal route if `eq5` is true
+
+### Case `eq5b` is true
+<pre>
+    -b     <=       -bc  # eq1
+    -b  -c <= -ab  -2bc  # eq2
+-a  -b  -c <=-2ab  -3bc  # eq3
+
+ a         <   ab        # eq4
+ a + b     <  2ab +  bc  # eq5b
+         c <         bc  # eq6
+
+         0 <       -2bc # eq9 = eq3 + eq5b + eq6
+</pre>
+Clearly `eq9` is impossible as well
+
+Hence, `bcbabc` cannot be the optimal route if `eq5b` is true
+
+### Summary
+Both ways result in the same conclusion that `bcbabc` cannot be the optimal route. Hence, the optimal route consists of at most 1 turn.
 
