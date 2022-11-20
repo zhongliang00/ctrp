@@ -1,4 +1,12 @@
 # City travel refuel problem
+Cities are positioned along the number line at `x1`, `x2`, etc. 
+Each city has a finite amount of fuel for you to pick up, `f1`, `f2`, etc. 
+You are a car, and you want to travel to as many cities as possible, and you can pick any city to start from.
+The fuel cost from city 1 to city 2 is simply the distance between them: `|x1-x2|`. 
+
+If you don't have enough fuel then you can't make the trip, obviously. 
+However, there is no limit to how much fuel you can carry.
+What is the maximum number of cities you can visit?
 
 ## Lemma
 The optimal route will not consist of more than 1 turn.
@@ -53,7 +61,7 @@ Let us consider `abc` first. For `abc` to be invalid, any of the following must 
 a         <   ab        # eq4  # cannot reach b from a
 a + b     <   ab +  bc  # eq4b # cannot reach c after reaching b
 </pre>
-But note that eq4b is redundant, since eq4b + eq1 = eq4 anyway. So the only active constraint is eq4
+But note that eq4b is redundant, since `eq4b` + `eq1` = `eq4` anyway. So the only active constraint is `eq4`
 
 ### Route `babc`
 <pre>
@@ -62,18 +70,23 @@ a + b     <  2ab +  bc  # eq5b # cannot reach c after reaching a
 </pre>
 Either one of the two constraints must be true for `bcbabc` to be the most optimal route.
 
+NB: We have omitted one constraint because the goal is to show that 
+even if we are charitable and pick the loosest constraint, we would still arrive at a contradiction
+
 ### Route `cbabc`
 <pre>
         c <         bc  # eq6  # cannot reach c from b
     b + c <   ab +  bc  # eq6b # cannot reach a after reaching b
 a + b + c <  2ab + 2bc  # eq6c # cannot reach c after reaching a
 </pre>
-Adding eq6b+eq2, and eq6c+eq3, we find that
+Adding `eq6b`+`eq2`, and `eq6c`+`eq3`, we find that
 <pre>
         0 <        -bc # eq6b + eq2
-        0 <        -bc # eq6c + eq3
+        0 <        -bc # eq6c + eq3 
 </pre>
-Since both these cases are impossible, the inequalities eq6b and eq6c are not active. So the only active constraint is eq6.
+Since both these cases are impossible, the inequalities `eq6b` and `eq6c` are not active. So the only active constraint is `eq6`.
+
+NB: Similarly we have omitted one constraint here.
 
 ### Case `eq5` is true
 <pre>
