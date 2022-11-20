@@ -117,7 +117,7 @@ Hence, `bcbabc` cannot be the optimal route if `eq5` is true
  a + b     <  2ab +  bc  # eq5b
          c <         bc  # eq6
 
-         0 <       -2bc # eq9 = eq3 + eq5b + eq6
+         0 <        -bc  # eq9 = eq3 + eq5b + eq6
 </pre>
 Clearly `eq9` is impossible as well
 
